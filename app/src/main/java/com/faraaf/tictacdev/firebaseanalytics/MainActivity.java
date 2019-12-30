@@ -1,11 +1,11 @@
 package com.faraaf.tictacdev.firebaseanalytics;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 
@@ -13,17 +13,20 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private FirebaseAnalytics firebaseAnalytics;
+    FirebaseAnalytics firebaseAnalytics;
     String[] foods;
     Food food;
     Button btnClick;
     EditText edtTest;
+    Bundle bundle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         bind();
+        clickEvents();
+
         // Obtain the Firebase Analytics instance.
         firebaseAnalytics = FirebaseAnalytics.getInstance(this);
         initModel();
@@ -33,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         //Here we create a bundle and pass it to the logEvent.
         // We can also set whether analytics collection is enabled for this app on this device.
-        Bundle bundle = new Bundle();
+        bundle = new Bundle();
         bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, food.getId());
         bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, food.getName());
 
@@ -61,8 +64,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void bind() {
         btnClick = findViewById(R.id.btnClick);
         edtTest = findViewById(R.id.edtTest);
-        btnClick.setOnClickListener(this);
+    }
 
+    private void clickEvents() {
+        btnClick.setOnClickListener(this);
     }
 
     private int randomIndex() {
